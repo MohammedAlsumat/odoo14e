@@ -1,0 +1,67 @@
+<odoo>
+    <data>
+          <record id="purchase_order_form_custom" model="ir.ui.view">
+        <field name="name">purchase.order.inherited.form.custom</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='currency_id']" position="after">
+                <field name="x_studio_internal_purchase" />
+                <field name="x_studio_external_purchase"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='products']/field[@name='order_line']/tree[1]/field[@name='name']"
+                   position="after">
+                <field name="x_studio_number_in_pack" string="Num in pack" optional="hide"/>
+            </xpath>
+
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='products']/field[@name='order_line']/tree[1]/field[@name='price_unit']"
+                   position="after">
+                <field name="x_studio_actual_unit_weight"
+                       attrs="{'column_invisible': [('parent.x_studio_internal_purchase', '=',  False)]}"
+                       string="Actual U.W" digits="[ 9,9]" optional="hide"/>
+                <field name="x_studio_total_actual_weight"
+                       attrs="{'column_invisible': [('parent.x_studio_internal_purchase', '=',  False)]}"
+                       digits="[9,9]" string="Total A.W" sum="Actual T.W"/>
+                <field name="x_studio_total_pieces" string="Total Pieces"
+                       attrs="{'column_invisible': [('parent.x_studio_internal_purchase', '=',  False)]}"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='products']/field[@name='order_line']/tree[1]/field[@name='name']"
+                   position="after">
+                <field name="x_studio_many2one_field_Y2R95" options="{&quot;no_create&quot;:true}"
+                       attrs="{&quot;column_invisible&quot;: [[&quot;parent.x_studio_external_purchase&quot;,&quot;=&quot;,False]], &quot;readonly&quot;: [[&quot;state&quot;,&quot;in&quot;,[&quot;purchase&quot;,&quot;done&quot;,&quot;cancel&quot;]]]}"/>
+            </xpath>
+
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='products']/field[@name='order_line']/tree[1]/field[@name='price_unit']"
+                   position="after">
+                <field name="x_studio_actual_unit_weight"
+                       attrs="{'column_invisible': [('parent.x_studio_internal_purchase', '!=',  False)]}"
+                       string="Actual Unit W" digits="[ 9,9]" optional="hide"/>
+
+                <field name="x_studio_total_external_weight"
+                       attrs="{'column_invisible': [('parent.x_studio_external_purchase', '=',  False)]}" digits="[9,9]"
+                       sum="Sum of إجمالي الوزن الخارجي"/>
+
+                <field name="x_studio_external_unit_price"
+                       attrs="{'column_invisible': [('parent.x_studio_external_purchase', '=',  False)]}" readonly="1"/>
+                <field name="x_studio_external_ton_price" string="External Ton Price" style="color: #386EC7;"
+                       attrs="{&quot;column_invisible&quot;: [[&quot;parent.x_studio_external_purchase&quot;,&quot;=&quot;,False]], &quot;readonly&quot;: [[&quot;invoice_lines&quot;,&quot;!=&quot;,[]]]}"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='products']/field[@name='order_line']/tree[1]/field[@name='product_uom']"
+                   position="after">
+                <field name="x_studio_input_ton_price" style="color: #386EC7;"
+                       attrs="{&quot;column_invisible&quot;: [[&quot;parent.x_studio_internal_purchase&quot;,&quot;=&quot;, False]], &quot;readonly&quot;: [[&quot;invoice_lines&quot;,&quot;!=&quot;,[]]]}"
+                       string="Internal Ton Price"/>
+                <field name="x_studio_1" invisible="1"/>
+                <field name="x_studio_2" invisible="1"/>
+                <field name="x_studio_3" invisible="1"/>
+                <field name="x_studio_4" invisible="1"/>
+                <field name="x_studio_5" invisible="1"/>
+                <field name="x_studio_6" invisible="1"/>
+                <field name="x_studio_7" invisible="1"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    </data>
+</odoo>

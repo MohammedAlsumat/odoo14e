@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="product_template_form_view_interval" model="ir.ui.view">
+            <field name="name">product_extended.product.form.interval</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="after">
+                    <field name="x_studio_product_interval"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="product_attribute_view_form" model="ir.ui.view">
+            <field name="name">product.attribute.form.inherit</field>
+            <field name="model">product.attribute</field>
+            <field name="inherit_id" ref="product.product_attribute_view_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='create_variant']" position="after">
+                    <field name="x_studio_size"/>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='attribute_values']/field[@name='value_ids']/tree[1]/field[@name='name']"
+                       position="after">
+                    <field name="x_studio_custom_value_actual" string="Custom Value (Actual)"
+                           attrs="{'column_invisible': [('parent.x_studio_size', '=',  False)]}" digits="[9,9]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_product_view_form_inherit_custom" model="ir.ui.view">
+            <field name="name">product.product.view.form.easy.custom</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_template_attribute_value_ids']" position="inside">
+                    <tree string="Attributes" create="0" delete="0">
+                        <field name="attribute_id"/>
+                        <field name="name"/>
+                        <field name="custom_value_actual" string="Variant Custom Size (Actual)"/>
+                        <field name="display_type"/>
+                        <field name="html_color" attrs="{'invisible': [('display_type', '!=', 'color')]}"
+                               widget="color"/>
+                        <field name="ptav_active" optional="hide"/>
+                        <field name="price_extra" widget="monetary"/>
+                        <field name="currency_id" invisible="1"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]" position="after">
+                    <group>
+                        <group name="studio_group_VnpOS_left" string="External Weights">
+                            <field name="x_studio_external_weights" string="External Weights" force_save="True"
+                                   attrs="{}">
+                                <tree>
+                                    <field name="x_name"/>
+                                    <field name="x_studio_length" digits="[9,9]"/>
+                                    <field name="x_studio_width" digits="[9,9]"/>
+                                    <field name="x_studio_thickness" digits="[9,9]"/>
+                                    <field name="x_studio_wth" digits="[9,9]"/>
+                                    <field name="x_studio_external_unit_weight" digits="[9,9]" readonly="1"/>
+                                </tree>
+                                <form>
+                                    <header/>
+                                    <sheet string="External Weights" name="studio_sheet_03e9f4">
+
+                                        <div class="oe_title" name="studio_div_89460c">
+                                            <h1>
+                                                <field name="x_name" required="1" placeholder="Name..."/>
+                                            </h1>
+                                        </div>
+                                        <group name="studio_group_ae59a8">
+                                            <group name="studio_group_ae59a8_left" string="المقاسات">
+                                                <field name="x_studio_length" string="Length" digits="[9,9]"/>
+                                                <field name="x_studio_width" string="Width" digits="[9,9]"/>
+                                                <field name="x_studio_thickness" string="Thickness" digits="[9,9]"/>
+                                                <field name="x_studio_wth" string="w*t*h" digits="[9,9]"/>
+                                                <field name="x_studio_many2one_field_RgPYK"
+                                                       options="{&quot;no_create&quot;:true,&quot;no_open&quot;:true}"
+                                                       attrs="{}" invisible="1"/>
+                                            </group>
+                                            <group name="studio_group_ae59a8_right"/>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </group>
+                        <group name="studio_group_KLCmV_left" string="Weightsssss">
+                            <field name="x_studio_product_interval_1" string="Product Interval "/>
+                            <field name="total_weight" string="Total Weight"/>
+                            <field name="actual_unit_weight" string="Actual Size" digits="[9,9]"/>
+                            <!--                        <field name="x_studio_custom_actual_weightwidth_thickness_length"-->
+                            <!--                               string="Custom Actual Weight(Width * Thickness * Length)"/>-->
+                            <!--                        <field name="x_studio_actual_unit_weight" string="Actual Unit Weight" digits="[9,9]"/>-->
+                            <!--                        <field name="x_studio_variant_minimum_ton_price" string="Variant Minimum Ton Price"/>-->
+                            <!--                        <field name="x_studio_brand_variant" string="brand_variant"/>-->
+                            <!--                        <field name="x_studio_changing" string="changing" attrs="{}"/>-->
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_x_external_weights_form">
+            <field name="name">external.weights.form</field>
+            <field name="model">external.weights</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="x_name"/>
+                            <field name="x_studio_length"/>
+                            <field name="x_studio_width"/>
+                            <field name="x_studio_thickness"/>
+                            <field name="x_studio_wth" digits="[9,9]"/>
+                        </group>
+                        <group>
+                            <field name="x_studio_many2one_field_RgPYK"/>
+                            <field name="x_studio_product_interval_external_weight"/>
+                            <field name="x_studio_external_unit_weight" readonly="1" digits="[9,9]"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_x_external_weights_tree">
+            <field name="name">external.weights.tree</field>
+            <field name="model">external.weights</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="x_name"/>
+                    <field name="x_studio_length"/>
+                    <field name="x_studio_width"/>
+                    <field name="x_studio_thickness"/>
+                    <field name="x_studio_wth"/>
+                    <field name="x_studio_many2one_field_RgPYK"/>
+                    <field name="x_studio_product_interval_external_weight"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="action_external_weights" model="ir.actions.act_window">
+            <field name="name">External Weight</field>
+            <field name="res_model">external.weights</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+                id="menu_external_weights"
+                name="External Weights"
+                parent="purchase.menu_purchase_config"
+                action="action_external_weights"
+        />
+
+    </data>
+</odoo>

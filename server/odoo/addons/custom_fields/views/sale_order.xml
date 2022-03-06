@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+
+    <!--    03249405496-->
+     <record id="sale_order_view_form" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.custom</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_unit']"
+                   position="before">
+                <field name="x_studio_number_in_pack"/>
+                <field name="x_studio_actual_unit_weight" digits="[ 9,9]"/>
+                <field name="x_studio_total_actual_weight" digits="[ 9,9]"/>
+                <field name="x_studio_total_pieces"/>
+                <field name="x_studio_input_ton_price"/>
+                <field name="x_studio_1" invisible="1"/>
+                <field name="x_studio_2" invisible="1"/>
+                <field name="x_studio_3" invisible="1"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='name']"
+                   position="after">
+                <field name="x_studio_number_in_pack" string="Number in Pack" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    </data>
+</odoo>
